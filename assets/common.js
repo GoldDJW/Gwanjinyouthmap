@@ -7,7 +7,32 @@ const CFG=window.GWANGJIN_MAP_CONFIG||{};
 function esc(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
 function n(v){const x=Number(String(v??'').replace(/,/g,''));return Number.isFinite(x)?x:null;}
 function truth(v){return v===1||v==='1'||v===true||String(v).toLowerCase()==='true'||String(v).trim()==='예';}
-function normDong(v){let s=String(v??'').trim().replace(/제/g,'').replace(/\s+/g,'');const m=s.match(/(중곡|구의|자양)(\d)동/);if(m)return `${m[1]}${m[2]}동`;return s;}
+function normDong(v) {
+  let s = String(v ?? '')
+    .trim()
+    .replace(/제/g, '')
+    .replace(/\s+/g, '');
+
+  // 전체 행정구역명에서 광진구 뒤의 행정동명 추출
+  const gwangjinMatch = s.match(
+    /광진구(중곡[1-4]동|능동|구의[1-3]동|광장동|자양[1-4]동|화양동|군자동)/
+  );
+
+  if (gwangjinMatch) {
+    return gwangjinMatch[1];
+  }
+
+  // 이미 행정동명만 전달된 경우
+  const dongMatch = s.match(
+    /(중곡[1-4]동|능동|구의[1-3]동|광장동|자양[1-4]동|화양동|군자동)$/
+  );
+
+  if (dongMatch) {
+    return dongMatch[1];
+  }
+
+  return s;
+}
 function normalizeInstitution(x){const r={
  연번:x.연번??x.id??'',기관명:String(x.기관명??x.name??'').trim(),영역:String(x['영역(분류)']??x.영역??x.categories??'').trim(),이용구분:String(x.이용구분??x.usage??'').trim(),자치구:String(x.자치구??x.district??'').trim(),행정동:normDong(x.행정동??x.dong??''),주소:String(x.주소??x.address??'').trim(),위도:n(x.위도??x.lat),경도:n(x.경도??x.lng??x.lon),좌표등급:String(x.좌표등급??x.좌표상태??'').trim(),연락처:String(x.연락처??x.phone??'').trim(),홈페이지:String(x['홈페이지 주소']??x.홈페이지??x.website??'').trim(),이용대상:String(x.이용대상??x.target??'').trim(),신청방법:String(x.신청방법??x.apply??'').trim(),권역:String(x.권역??x.zone??'').trim(),마커유형:String(x.마커유형??'').trim()
  };
