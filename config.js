@@ -1,6 +1,7 @@
-/* 이 파일은 package_builder.html 또는 build_site.py가 원본 엑셀의 지도제작용_최종 시트로부터 생성합니다. */
-window.GWANGJIN_DATA_META = { count: 0, version: '', generatedAt: '' };
-window.GWANGJIN_INSTITUTIONS = [];
 window.GWANGJIN_MAP_CONFIG = {
-  KAKAO_JAVASCRIPT_KEY: "1f7e33df0f406de47e4333ff3570fa24"
+  kakaoJavaScriptKey: "1f7e33df0f406de47e4333ff3570fa24",
+  dataVersion: "2026-07-03",
+  defaultCenter: { lat: 37.5480, lng: 127.0820 },
+  defaultLevel: 6,
+  boundaryUrl: 'https://raw.githubusercontent.com/raqoon886/Local_HangJeongDong/master/hangjeongdong_%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C.geojson'
 };
